@@ -1,6 +1,7 @@
 require 'rspec'
 require 'word'
 require 'game'
+require 'random-word'
 
 describe 'Word' do
   it 'creates a new word object' do
@@ -58,5 +59,29 @@ describe Game do
   it 'is creates a new game object' do
     test_game = Game.new("JJ")
     expect(test_game).to be_an_instance_of Game
+  end
+
+  it 'initializes with a random word from a word bank' do
+    test_game = Game.new("JJ")
+    expect(test_game.game_word.word).to be_an_instance_of String
+  end
+
+  describe 'take_turn' do
+    it 'increases the whammies by one if the guessed letter not in word' do
+      test_game = Game.new("JJ")
+      test_game.game_word.word = "blue"
+      test_game.take_turn("x")
+      expect(test_game.whammy).to eq 1
+    end
+
+    it 'changes out correct guesses' do
+      test_game = Game.new("Matt")
+      puts test_game.game_word.word
+      test_game.game_word.word = "blue"
+      test_game.game_word.letters = test_game.game_word.word.split("")
+      test_game.game_word.blanks = ["_", "_", "_", "_"]
+      test_game.take_turn("l")
+      expect(test_game.game_word.blanks).to eq ["_", "l", "_", "_"]
+    end
   end
 end

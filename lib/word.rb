@@ -1,5 +1,5 @@
 class Word
-  attr_reader :letters, :word, :blanks, :guessed
+  attr_accessor :letters, :word, :blanks, :guessed
 
   def initialize(word)
     @word = word
@@ -9,7 +9,6 @@ class Word
   end
 
   def guess(letter)
-      @guessed << letter
       @letters.include?(letter)
   end
 
@@ -18,6 +17,7 @@ class Word
   end
 
   def replace_blanks(letter)
+    @guessed << letter
     if guess(letter)
       @letters.each_with_index do |let, index|
         if let == letter
